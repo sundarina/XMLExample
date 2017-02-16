@@ -25,7 +25,7 @@ public class Worldmap {
     }
 
     // Записать данные в файл XML
-    public void saveToFile(String filename) throws TransformerException {
+    public void saveToFile(String filename) /*throws TransformerException */ {
 
         DocumentBuilderFactory dbf = null;
         DocumentBuilder db = null;
@@ -54,21 +54,24 @@ public class Worldmap {
             country1.setAttribute("name", countries.get(i).getName());
             root.appendChild(country1);
 
-            for (int j = 0; j < countries.size(); j++) {
-                // Создаем объекты "города"
-                city1 = doc.createElement(cities.getClass().getName());
-                city1.setAttribute("id", String.valueOf(cities.get(j).getCode()));
-                city1.setAttribute("name", cities.get(j).getName());
-                city1.setAttribute("count", String.valueOf(cities.get(j).getCount()));
-                city1.setAttribute("country", String.valueOf(cities.get(j).getCountry()));
-                if (cities.get(j).isCapital()) {
-                    city1.setAttribute("iscap", "1");
-                } else {
-                    city1.setAttribute("iscap", "0");
-                }
+            for (int j = 0; j < cities.size(); j++) {
 
-                country1.appendChild(city1);
+                if (cities.get(j).getCountry().getCode() == countries.get(i).getCode()) {
+                    // Создаем объекты "города"
+                    city1 = doc.createElement(cities.getClass().getName());
+                    city1.setAttribute("id", String.valueOf(cities.get(j).getCode()));
+                    city1.setAttribute("name", cities.get(j).getName());
+                    city1.setAttribute("count", String.valueOf(cities.get(j).getCount()));
+                    city1.setAttribute("country", String.valueOf(cities.get(j).getCountry()));
+                    if (cities.get(j).isCapital()) {
+                        city1.setAttribute("iscap", "1");
+                    } else {
+                        city1.setAttribute("iscap", "0");
+                    }
+                    country1.appendChild(city1);
+                }
             }
+
         }
 
 
@@ -79,27 +82,38 @@ public class Worldmap {
         Source domSource = new DOMSource(doc);
         Result fileResult = new StreamResult(new File(filename));
         TransformerFactory factory = TransformerFactory.newInstance();
-        Transformer transformer = factory.newTransformer();
+        Transformer transformer = null;
+        try {
+            transformer = factory.newTransformer();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        }
         transformer.setOutputProperty(OutputKeys.ENCODING, "WINDOWS-1251");
-        transformer.transform(domSource, fileResult);
+        try {
+            transformer.transform(domSource, fileResult);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
 
     }
 
     // Прочитать данные из файла XML
-    public void loadFromFile(String filename) {
+    public void loadFromFile(String filename) /*throws SAXException, IOException, ParserConfigurationException*/ {
         DocumentBuilderFactory dbf = null;
         DocumentBuilder db = null;
         Document doc = null;
 
+        dbf = DocumentBuilderFactory.newInstance();
         try {
-            dbf = DocumentBuilderFactory.newInstance();
             db = dbf.newDocumentBuilder();
-            doc = db.parse(new File("xml" + File.separator + "map.xml"));
-        } catch (ParserConfigurationException e1) { //конфигурации
-            e1.printStackTrace();
-        } catch (SAXException e) { //схемы
+        } catch (ParserConfigurationException e) {
             e.printStackTrace();
-        } catch (IOException e) { //чтение записть файла
+        }
+        try {
+            doc = db.parse(new File("xml" + File.separator + "map.xml"));
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -136,48 +150,99 @@ public class Worldmap {
                     int count = Integer.parseInt(city.getAttribute("count"));
                     cities.add(new City(cityName, isCap, count, cityCode, countries.get(i)));
                 }
-
             }
 
-            for (int i = 0; i < countries.size(); i++) {
-                for (int j = 0; j < cities.size(); j++) {
-                    System.out.println(cities.get(j));
-                }
-               System.out.println(countries.get(i));
-            }
-
-
+//            for (int i = 0; i < countries.size(); i++) {
+//                for (int j = 0; j < cities.size(); j++) {
+//                    System.out.println(cities.get(j));
+//                }
+//                System.out.println(countries.get(i));
+//            }
+            System.out.println(countries);
+            System.out.println(cities);
         }
-
-
     }
 
-    // Добавить новую страну
-    public void addCountry(int code, String name) {
 
-// если страны с заданным кодом в массиве countries еще нет -
-//добавляем новую страну в массив
-// в противном случае генерируем исключение
+    // Добавить новую страну
+    public void addCountry(int code, String name) throws Exception {
+        boolean exist = false;
+        for (int i = 0; i < countries.size(); i++) {
+            if (countries.get(i).getCode() == code) {
+                exist = true;
+                break;
+            }
+        }
+        if (exist) {
+            throw new Exception("Страна с заданным кодом уже существует");
+
+        } else if (!exist) {
+            countries.add(new Country(code, name));
+        }
+
+        System.out.println(countries);
+        // если страны с заданным кодом в массиве countries еще нет -
+        //добавляем новую страну в массив
+        // в противном случае генерируем исключение
 
     }
 
     // Получить страну c заданным кодом
 
-//    public Country getCountry(int code) {
-//
-//        // возвращаем страну с заданным кодом
-//        // если страны с заданным кодом в массиве countries нет -
-//        //генерируем исключение
-//
-//
-//    }
 
-//    // Получить страну c заданным номером
-//    public Country getCountryInd(int index) {
-//        // возвращаем страну с заданным порядковым номером
-//        // если номер выходит за границы индексов массива -
-//        //генерируем исключение
-//    }
+    public Country getCountry(int code) throws Exception {
+
+        int min = 0;
+        for (int i = 0; i < countries.size(); i++) {
+            if (min >= countries.get(i).getCode()) {
+                min = countries.get(i).getCode();
+            }
+        }
+        boolean exist = false;
+        Country c = null;
+        for (int i = min; i < countries.size(); i++) {
+            if (countries.get(i).getCode() != code) {
+                exist = true;
+                break;
+            }
+        }
+
+        if (exist) {
+            throw new Exception("Cтраны с заданым кодом не существует");
+        } else if (!exist) {
+            for (int i = min; i < countries.size(); i++) {
+                if (countries.get(i).getCode() == code) {
+                    c = countries.get(i);
+                }
+            }
+        }
+        return c;
+        // возвращаем страну с заданным кодом
+        // если страны с заданным кодом в массиве countries нет -
+        //генерируем исключение
+    }
+
+    // Получить страну c заданным номером
+    public Country getCountryInd(int index) throws Exception {
+        Country c = null;
+        boolean exist = false;
+        for (int i = 0; i < countries.size(); i++) {
+            if (index >= countries.size()) {
+                exist = true;
+                break;
+            }
+        }
+
+        if (exist) {
+            throw new Exception("Ваш номер превышает количество стран в списке");
+        } else if (!exist) {
+            c = countries.get(index);
+        }
+        return c;
+        // возвращаем страну с заданным порядковым номером
+        // если номер выходит за границы индексов массива -
+        //генерируем исключение
+    }
 
     // Получить количество стран
     public int countCountries() {
@@ -187,7 +252,35 @@ public class Worldmap {
 
     // Удалить страну
 
-    public void deleteCountry(int code) {
+    public void deleteCountry(int code) throws Exception {
+
+        boolean exist = false;
+        for (int i = 0; i < countries.size(); i++) {
+            if (countries.get(i).getCode() != code) {
+                exist = true;
+                break;
+            }
+        }
+
+        if (exist) {
+            throw new Exception("Cтраны с таким кодом нет в списке");
+        } else if (!exist) {
+            for (int i = 0; i < countries.size(); i++) {
+                if (countries.get(i).getCode() == code) {
+                    countries.remove(i);
+                }
+            }
+        }
+
+        for (int j = 0; j < cities.size(); j++) {
+            if (cities.get(j).getCountry().getCode() == code) {
+                cities.remove(j);
+                j -= 1; //так как ячейка удаляеться, а следующая стает на ее место и уже не проверяеться. так как наращиваеться итератор
+            }
+        }
+
+        System.out.println(countries);
+        System.out.println(cities);
         // Удаляем страну с заданным кодом, а также все города,
         // ссылающиеся на данну страну
         // Если страны с заданным кодом в массиве countries нет -
@@ -195,14 +288,48 @@ public class Worldmap {
     }
 
     // Добавить новый город для заданной страны
-    public void addCity(int code, String name, boolean isCapital,
-                        int count, int countryCode) {
+
+    public void addCity(String name, boolean isCapital,
+                        int count, int code, int countryCode) throws Exception {
+
+        boolean bool = false;
+        Country c = null;
+        for (int i = 0; i < countries.size(); i++) {
+            if (countries.get(i).getCode() != countryCode) {
+                bool = true;
+                break;
+            }
+        }
+
+        if (bool) {
+            throw new Exception("Страны, куда нужно добавить город, нет в списке");
+        } else if (!bool) {
+            for (int i = 0; i < countries.size(); i++) {
+                c = countries.get(i);
+            }
+        }
+
+        boolean exist = false;
+
+        for (int i = 0; i < cities.size(); i++) {
+            if (cities.get(i).getCode() == code) {
+                exist = true;
+                break;
+            }
+        }
+
+        if (exist) {
+            throw new Exception("В стране уже есть город с таким кодом");
+        } else if (!exist) {
+            cities.add(new City(name, isCapital, code, count, c));
+        }
+
+        System.out.println(cities);
         // если город с заданным кодом code уже есть
         //генерируем исключение
+
         // если страны с заданным кодом countryCode нет
         //генерируем исключение
         // в противном случае, добавляем новый город
     }
-
-
 }
