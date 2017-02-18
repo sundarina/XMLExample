@@ -1,3 +1,5 @@
+package domApiExample;
+
 public class Country {
     public int code; // Уникальный код страны
     public String name; // Название страны
@@ -26,7 +28,7 @@ public class Country {
 
     @Override
     public String toString() {
-        return "Country{" +
+        return "domApiExample.Country{" +
                 "code=" + code +
                 ", name='" + name + '\'' +
                 '}';

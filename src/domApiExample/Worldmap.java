@@ -1,3 +1,4 @@
+package domApiExample;
 
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
@@ -49,7 +50,7 @@ public class Worldmap {
 
         for (int i = 0; i < countries.size(); i++) {
             // Создаем объект "страна"
-            country1 = doc.createElement(countries.getClass().getName());
+            country1 = doc.createElement("Countries");
             country1.setAttribute("code", String.valueOf(countries.get(i).getCode()));
             country1.setAttribute("name", countries.get(i).getName());
             root.appendChild(country1);
@@ -58,7 +59,7 @@ public class Worldmap {
 
                 if (cities.get(j).getCountry().getCode() == countries.get(i).getCode()) {
                     // Создаем объекты "города"
-                    city1 = doc.createElement(cities.getClass().getName());
+                    city1 = doc.createElement("Cities");
                     city1.setAttribute("id", String.valueOf(cities.get(j).getCode()));
                     city1.setAttribute("name", cities.get(j).getName());
                     city1.setAttribute("count", String.valueOf(cities.get(j).getCount()));
@@ -201,21 +202,22 @@ public class Worldmap {
         boolean exist = false;
         Country c = null;
         for (int i = min; i < countries.size(); i++) {
-            if (countries.get(i).getCode() != code) {
+            if (countries.get(i).getCode() == code) {
                 exist = true;
+                c = countries.get(i);
                 break;
             }
         }
 
-        if (exist) {
+        if (!exist) {
             throw new Exception("Cтраны с заданым кодом не существует");
-        } else if (!exist) {
-            for (int i = min; i < countries.size(); i++) {
-                if (countries.get(i).getCode() == code) {
-                    c = countries.get(i);
-                }
-            }
-        }
+//        } else if (exist) {
+//            for (int i = min; i < countries.size(); i++) {
+//                if (countries.get(i).getCode() == code) {
+//
+//                }
+//            }
+       }
         return c;
         // возвращаем страну с заданным кодом
         // если страны с заданным кодом в массиве countries нет -
@@ -227,16 +229,15 @@ public class Worldmap {
         Country c = null;
         boolean exist = false;
         for (int i = 0; i < countries.size(); i++) {
-            if (index >= countries.size()) {
+            if (index < countries.size()) {
                 exist = true;
+                c = countries.get(index);
                 break;
             }
         }
 
-        if (exist) {
+        if (!exist) {
             throw new Exception("Ваш номер превышает количество стран в списке");
-        } else if (!exist) {
-            c = countries.get(index);
         }
         return c;
         // возвращаем страну с заданным порядковым номером
@@ -256,20 +257,15 @@ public class Worldmap {
 
         boolean exist = false;
         for (int i = 0; i < countries.size(); i++) {
-            if (countries.get(i).getCode() != code) {
+            if (countries.get(i).getCode() == code) {
                 exist = true;
+                countries.remove(i);
                 break;
             }
         }
 
-        if (exist) {
+        if (!exist) {
             throw new Exception("Cтраны с таким кодом нет в списке");
-        } else if (!exist) {
-            for (int i = 0; i < countries.size(); i++) {
-                if (countries.get(i).getCode() == code) {
-                    countries.remove(i);
-                }
-            }
         }
 
         for (int j = 0; j < cities.size(); j++) {
@@ -295,18 +291,15 @@ public class Worldmap {
         boolean bool = false;
         Country c = null;
         for (int i = 0; i < countries.size(); i++) {
-            if (countries.get(i).getCode() != countryCode) {
+            if (countries.get(i).getCode() == countryCode) {
                 bool = true;
+                c = countries.get(i);
                 break;
             }
         }
 
-        if (bool) {
+        if (!bool) {
             throw new Exception("Страны, куда нужно добавить город, нет в списке");
-        } else if (!bool) {
-            for (int i = 0; i < countries.size(); i++) {
-                c = countries.get(i);
-            }
         }
 
         boolean exist = false;

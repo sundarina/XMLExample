@@ -1,3 +1,5 @@
+package domApiExample;
+
 public class City {
     private String name;
     private boolean isCapital;
@@ -56,7 +58,7 @@ public class City {
 
     @Override
     public String toString() {
-        return "City{" +
+        return "domApiExample.City{" +
                 "name=" + name +
                 ", isCapital=" + isCapital +
                 ", count=" + count +
