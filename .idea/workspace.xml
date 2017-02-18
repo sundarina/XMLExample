@@ -2,17 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4f428c3-a1a3-4581-b9c3-9386344a1269" name="Default" comment="Merge https://github.com/sundarina/LessonProjectJava2&#10;&#10;# Conflicts:&#10;#&#9;prj01/MainFigures.java&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/domApiExample/ProgramOfWorldmap.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/saxApiExample/Book.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/saxApiExample/MainBookParse.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/saxApiExample/ParseBooksSAX.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/xml/books.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/XMLExample/City.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/XMLExample/Country.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/XMLExample/ProgramOfWorldmap.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/XMLExample/Worldmap.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ProgramOfWorldmap.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../prj01/CLine.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../prj01/CPoint.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../prj01/CcoloredLine.java" afterPath="" />
@@ -22,12 +11,7 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/../prj01/Figure.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../prj01/MainFigures.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../prj01/TriangleClass.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/City.java" afterPath="$PROJECT_DIR$/src/domApiExample/City.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Country.java" afterPath="$PROJECT_DIR$/src/domApiExample/Country.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Worldmap.java" afterPath="$PROJECT_DIR$/src/domApiExample/Worldmap.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/xml/eat.xml" afterPath="$PROJECT_DIR$/xml/eat.xml" />
     </list>
     <list id="e62e9fd3-3269-4b85-b178-89b488bee522" name="Failed commit: Default" comment="cчитывание и запись в хml&#10;не работает запись с готовых листов (города не устанавливаются в соотв страны)" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -47,7 +31,7 @@
       <file leaf-file-name="ParseBooksSAX.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saxApiExample/ParseBooksSAX.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1188">
+            <state relative-caret-position="1134">
               <caret line="108" column="43" lean-forward="false" selection-start-line="108" selection-start-column="43" selection-end-line="108" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -521,6 +505,14 @@
       <option name="presentableId" value="Default" />
       <updated>1487095876235</updated>
     </task>
+    <task id="LOCAL-00001" summary="примеры использования SAX">
+      <created>1487429739307</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1487429739307</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -592,7 +584,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="cчитывание и запись в хml&#10;не работает запись с готовых листов (города не устанавливаются в соотв страны)" />
-    <option name="LAST_COMMIT_MESSAGE" value="cчитывание и запись в хml&#10;не работает запись с готовых листов (города не устанавливаются в соотв страны)" />
+    <MESSAGE value="&#10;" />
+    <MESSAGE value="примеры использования SAX" />
+    <option name="LAST_COMMIT_MESSAGE" value="примеры использования SAX" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1056,7 +1050,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saxApiExample/ParseBooksSAX.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1188">
+        <state relative-caret-position="1134">
           <caret line="108" column="43" lean-forward="false" selection-start-line="108" selection-start-column="43" selection-end-line="108" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
